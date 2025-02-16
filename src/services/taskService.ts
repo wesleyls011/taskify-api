@@ -21,10 +21,13 @@ export class TaskService{
         }
     }
 
-    static async createTask(data: {name: string; description: string; completed: boolean; userId: string}){
+    static async createTask(data: {name: string; description: string; userId: string}){
         try{
             return await prisma.task.create({
-                data,
+                data: {
+                    ...data,
+                    completed: false,
+                }
             });
         } catch(error){
             throw new Error ('Erro ao criar tarefa: ' + error.message);
